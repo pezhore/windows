@@ -6,7 +6,9 @@ import os
 # We're expecting a space deliminated string from the makefile. Split it into
 # an array so we can get started.
 files_raw = sys.argv[1]
-files = files_raw.split()
+files_split = files_raw.split()
+files = sorted(files_split)
+
 
 good_files = []
 # Parse through every file
@@ -28,4 +30,3 @@ for i in range(len(files)):
 
 # now that we have a list of good files, dump it out for the makefile
 sys.stdout.write("%s\n" % ' '.join(good_files))
-
