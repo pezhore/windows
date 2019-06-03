@@ -108,6 +108,11 @@ else
 endif
 TEMPLATE_FILENAMES := $(wildcard *.json)
 BOX_FILENAMES := $(TEMPLATE_FILENAMES:.json=$(BOX_SUFFIX))
+# We need to filter out for only json/box filenames for only files with a valid ISO
+# So we farm out to python to help with that.
+TEST_BOX_FILENAMES := $(shell python script/validate_iso_location.py "$(TEMPLATE_FILENAMES)")
+print-%  : ; @echo $* = $($*)
+
 TEST_BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), test-box/$(builder)/$(box_filename)))
 VMWARE_BOX_DIR := box/vmware
 VIRTUALBOX_BOX_DIR := box/virtualbox
