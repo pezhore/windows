@@ -108,6 +108,12 @@ else
 endif
 TEMPLATE_FILENAMES := $(wildcard *.json)
 BOX_FILENAMES := $(TEMPLATE_FILENAMES:.json=$(BOX_SUFFIX))
+
+# Use python to check and see if the template files are referencing a local iso. This will
+# ensure only .json files with web accessible or local ISO files are included in the make test
+TEST_TEMPLATE_FILENAMES := $(shell python script/validate_iso_location.py "$(TEMPLATE_FILENAMES)")
+TEST_BOX_FILENAMES := $(TEST_TEMPLATE_FILENAMES:.json=$(BOX_SUFFIX))
+
 TEST_BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), test-box/$(builder)/$(box_filename)))
 VMWARE_BOX_DIR := box/vmware
 VIRTUALBOX_BOX_DIR := box/virtualbox
