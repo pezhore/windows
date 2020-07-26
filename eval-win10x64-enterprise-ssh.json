@@ -191,7 +191,7 @@
     }
   ],
   "variables": {
-    "cpus": "2",
+    "cpus": "4",
     "memory": "4096",
     "guest_additions_url": "",
     "cm": "chef",
